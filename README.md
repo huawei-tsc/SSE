@@ -13,7 +13,7 @@ BT的主要问题：
 
 针对BT伪语料的两个问题，如果在BT之后，能通过SSE模型，提升BT原文的质量，同时将原文的风格迁移至Natural方向，和双语对其，可以大幅提升BT的质量。
 
-- ![image](https://github.com/huawei-tsc/SSE/blob/main/sse.PNG)
+![image](https://github.com/huawei-tsc/SSE/blob/main/sse.PNG)
 
 ## 实验结果
 

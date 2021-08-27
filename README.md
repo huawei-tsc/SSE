@@ -33,7 +33,7 @@ BT的主要问题：
 
 ## 预训练模型
 
-| odel        | Description                  | data                          | arch            | download |
+| model        | Description                  | data                          | arch            | download |
 | ----------- | ---------------------------- | ----------------------------- | --------------- | -------- |
 | EN          | wmt news en sse              | wmt 2021 NewsCrawl Random 30M | tranformer-big | comming  |
 | EN-FR-DE-RU | wmt en fr de multiligual sse | wmt news                      | tranformer-big | comming  |

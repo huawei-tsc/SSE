@@ -31,7 +31,7 @@ BT的主要问题：
 | &nbsp; + SSE          | **29.31** | 35.70     | **32.42** |
 | &nbsp; + Sampling SSE | 29.03     | 35.72     | 32.12     |
 
-## Pre-trained models
+## 预训练模型
 
 | odel        | Description                  | data                          | arch            | download |
 | ----------- | ---------------------------- | ----------------------------- | --------------- | -------- |
@@ -39,7 +39,7 @@ BT的主要问题：
 | EN-FR-DE-RU | wmt en fr de multiligual sse | wmt news                      | tranformer-base | comming  |
 | SSE-100     | big multiligual sse ?        |                               |                 |          |
 
-## how to use
+## 如何使用
 
 #### EN SSE
 

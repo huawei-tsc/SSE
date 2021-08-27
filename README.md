@@ -33,24 +33,49 @@ BT的主要问题：
 
 ## Pre-trained models
 
-| Model    | Description                  | data                               | arch            | download |
-| -------- | ---------------------------- | ---------------------------------- | --------------- | -------- |
-| EN       | wmt news en sse              | wmt 2007-2017 NewsCrawl Random 24M | tranformer-base | url      |
-| EN-FR-DE | wmt en fr de multiligual sse | xxx                                | tranformer-base | url      |
-|          |                              |                                    |                 |          |
+| odel        | Description                  | data                          | arch            | download |
+| ----------- | ---------------------------- | ----------------------------- | --------------- | -------- |
+| EN          | wmt news en sse              | wmt 2021 NewsCrawl Random 30M | tranformer-base | comming  |
+| EN-FR-DE-RU | wmt en fr de multiligual sse | wmt news                      | tranformer-base | comming  |
+| SSE-100     | big multiligual sse ?        |                               |                 |          |
 
 ## how to use
 
-1. download and unzip
+#### EN SSE
 
-   ```
-   wget http://xxx:xxx/en.pt
-   tar -xvf en.pt
+1. 数据处理：tokenizer 和 亚词
+
+   a. 我们使用mosesdecoder做分词： https://github.com/moses-smt/mosesdecoder
+
+   ```shell
+   perl mosesdecoder/scripts/tokenizer/tokenizer.perl -a -l en < bt.en > token.en
    ```
 
-2. Enhance your BT data
+   b. 我们使用BPE生成亚词： https://github.com/rsennrich/subword-nmt
 
+   ```shell
+   subword-nmt apply-bpe -c wmt2014.en-de.codefile < token.en > bpe.en
    ```
-   bt_src=wmt_en_mt
-   fairseq-generate xxxxx
+
+2. 使用SSE模型增强BT语料
+
+   ```python
+   # Load pretrained sse model
+   src_lang = "rtt"  # the mt en
+   target_lang = en  # the natural en
+   en2de_pre_trained = TransformerModel.from_pretrained(
+       model_dir_path,
+       checkpoint_file=checkpoint_file,
+       data_name_or_path=model_dir_path,
+       source_lang=source_lang,
+       target_lang=target_lang,
+       device_id=0
+   )
+   en2de_pre_trained.cuda()
+   
+   # For sampling 
+   en2de_pre_trained.translate(input_a_batch, beam=1, sampling=True, sampling_topk=10)
+   # For Beam search
+   en2de_pre_trained.translate(input_a_batch, beam=2)
    ```
+

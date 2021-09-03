@@ -1,25 +1,24 @@
-# SSE
-Synthetic Source Enhanced Back-Translation
-## 介绍
+# Synthetic Source-Enhanced Back-Translation (SSE-BT)
+## Introduction
 
-机器翻译中，双语数据获取存在一定难度，相比之下，单语数据较为容易获取。因此也产生了大量的通过单语数据增强MT的方法。最为典型的代表就是Back Translation，简称BT。
+Obtaining bilingual data is always harder than monolingual ones, so researchers have long exploited how to enhance machine translation performances using monolingual data. One of the most widely-used strategy is Back Translation (BT).
 
-BT的主要问题：
+Admittedly, BT leads to great improvements in terms of translation quality, however, here are still some problems:
 
-* **翻译腔**：原文风格问题，和Natural的双语语料有差距；
-* **质量**：当双语数据不足，tgt2src模型质量较差时，无法保证伪语料质量；
+* **Translationese**：The style of generated source sentences may divert from natural ones.
+* **Quality**：In scenarios where bilingual data is insufficient, the trained BT model can hardly generate high-quality synthetic data.
 
-以上两点，导致同等数量的伪语料和真是双语语料带来的提升效果gap很大。
+As a result, there is still a large gap between synthetic data and real parallel corpora.
 
-针对BT伪语料的两个问题，如果在BT之后，能通过SSE模型，提升BT原文的质量，同时将原文的风格迁移至Natural方向，和双语对其，可以大幅提升BT的质量。
+To address the two issues, we devise an SSE model to improve the quality of generated source sentences, as well as transfer the sentence style to a more natural one. Our experiments demonstrate that SSE model can further enhance machine translation quality.
 
 ![image](https://github.com/huawei-tsc/SSE/blob/main/sse.PNG)
 
-## 实验结果
+## Experiment Results
 
 ### WMT14 EN-DE
 
-双语：EN-DE 4.5M  单语：DE 24M
+Bilingual: EN-DE 4.5M  Monolingual: DE 24M
 
 |                | orig-en   | orig-de   | WMT14     |
 | -------------- | --------- | --------- | --------- |
@@ -31,7 +30,7 @@ BT的主要问题：
 | &nbsp; + SSE          | **29.31** | 35.70     | **32.42** |
 | &nbsp; + Sampling SSE | 29.03     | 35.72     | 32.12     |
 
-## 预训练模型
+## Pre-train Model
 
 | model        | Description                  | data                          | arch            | download |
 | ----------- | ---------------------------- | ----------------------------- | --------------- | -------- |
@@ -39,25 +38,25 @@ BT的主要问题：
 | EN-FR-DE-RU | wmt en fr de multiligual sse | wmt news                      | tranformer-big | comming  |
 | SSE-100     | big multiligual sse ?        |                               |                 |          |
 
-## 如何使用
+## How To Use
 
 #### EN SSE
 
-1. 数据处理：tokenizer 和 亚词
+1. 1.	Data Processing
 
-   a. 我们使用mosesdecoder做分词： https://github.com/moses-smt/mosesdecoder
+   a. Tokenize using mosesdecoder： https://github.com/moses-smt/mosesdecoder
 
    ```shell
    perl mosesdecoder/scripts/tokenizer/tokenizer.perl -a -l en < bt.en > token.en
    ```
 
-   b. 我们使用BPE生成亚词： https://github.com/rsennrich/subword-nmt
+   b. Generate subwords  using BPE： https://github.com/rsennrich/subword-nmt
 
    ```shell
    subword-nmt apply-bpe -c wmt2014.en-de.codefile < token.en > bpe.en
    ```
 
-2. 使用SSE模型增强BT语料
+2. Enhance BT data quality using SSE model
 
    ```python
    # Load pretrained sse model

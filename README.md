@@ -42,7 +42,7 @@ Bilingual: EN-DE 4.5M  Monolingual: DE 24M
 
 #### EN SSE
 
-1. 1.	Data Processing
+1. Data Processing
 
    a. Tokenize using mosesdecoder： https://github.com/moses-smt/mosesdecoder
 
